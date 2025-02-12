@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Contador de Tempo</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+        #contador {
+            font-size: 1.5em;
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f0f0f0;
+            border-radius: 10px;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <h1>Tempo desde 14/07/2016:</h1>
+    <div id="contador">Carregando...</div>
+
+    <script>
+        function calcularDiferenca() {
+            const inicio = new Date(Date.UTC(2016, 6, 14)); // 14 de Julho de 2016 em UTC
+            const agora = new Date();
+
+            // Diferença total em milissegundos
+            let diff = agora - inicio;
+
+            // Cálculos baseados em UTC para precisão
+            const startUTC = Date.UTC(inicio.getUTCFullYear(), inicio.getUTCMonth(), inicio.getUTCDate());
+            const nowUTC = Date.UTC(agora.getUTCFullYear(), agora.getUTCMonth(), agora.getUTCDate());
+
+            // Cálculo preciso de anos, meses e dias
+            let anos = agora.getUTCFullYear() - inicio.getUTCFullYear();
+            let meses = agora.getUTCMonth() - inicio.getUTCMonth();
+            let dias = agora.getUTCDate() - inicio.getUTCDate();
+
+            // Ajustes para valores negativos
+            if (dias < 0) {
+                const ultimoDiaMesAnterior = new Date(agora.getUTCFullYear(), agora.getUTCMonth(), 0).getUTCDate();
+                dias = ultimoDiaMesAnterior - inicio.getUTCDate() + agora.getUTCDate();
+                meses--;
+            }
+
+            if (meses < 0) {
+                meses += 12;
+                anos--;
+            }
+
+            // Cálculo de horas, minutos e segundos
+            const horas = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutos = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const segundos = Math.floor((diff % (1000 * 60)) / 1000);
+
+            return {
+                anos: anos,
+                meses: meses,
+                dias: dias,
+                horas: horas,
+                minutos: minutos,
+                segundos: segundos
+            };
+        }
+
+        function atualizarContador() {
+            const tempo = calcularDiferenca();
+            const contador = document.getElementById('contador');
+            contador.innerHTML = `${tempo.anos} anos, ${tempo.meses} meses, ${tempo.dias} dias<br>
+                                ${tempo.horas} horas, ${tempo.minutos} minutos, ${tempo.segundos} segundos`;
+        }
+
+        // Atualiza imediatamente e a cada segundo
+        atualizarContador();
+        setInterval(atualizarContador, 1000);
+    </script>
+</body>
+</html>
