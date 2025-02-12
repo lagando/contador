@@ -1,81 +1,124 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Contador de Tempo</title>
-    <style>
-        body {
-            font-family: sans-serif;
-            text-align: center;
-            padding: 20px;
-        }
-        #contador {
-            font-size: 1.5em;
-            margin-top: 20px;
-            padding: 15px;
-            background-color: #f0f0f0;
-            border-radius: 10px;
-            display: inline-block;
-        }
-    </style>
+  <meta charset="utf-8">
+  <title>Nosso Tempo Juntos ❤️</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      text-align: center;
+      padding: 20px;
+      background-color: #ffe6e6;
+      color: #b30000;
+    }
+    h1 {
+      font-size: 2.5em;
+      margin-bottom: 10px;
+    }
+    .contador-box {
+      font-size: 1.8em;
+      margin-top: 20px;
+      padding: 20px;
+      background-color: #ffcccc;
+      border-radius: 15px;
+      display: inline-block;
+      min-width: 350px;
+      box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
+    }
+    .contador-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
+    }
+    .heart {
+      font-size: 2em;
+    }
+  </style>
 </head>
 <body>
-    <h1>Tempo desde 14/07/2016:</h1>
-    <div id="contador">Carregando...</div>
+  <h1>Gabriel e Giulia <br> Nosso amor em Números ❤️</h1>
+  <p class="heart">💖 Desde o dia que começamos nosso namoro 💖</p>
+  <div class="contador-container">
+    <div id="contador" class="contador-box">Carregando...</div>
+    ou seja, nós temos:
+    <div id="anosDecimal" class="contador-box">Carregando anos...</div>
+    <div id="diasTotais" class="contador-box">Carregando dias totais...</div>
+    <div id="horasTotais" class="contador-box">Carregando horas totais...</div>
+    <div id="minutosTotais" class="contador-box">Carregando minutos totais...</div>
+    <div id="segundosTotais" class="contador-box">Carregando segundos totais...</div>
+    Feito por: Gabriel
+  </div>
 
-    <script>
-        function calcularDiferenca() {
-            const inicio = new Date(Date.UTC(2016, 6, 14)); // 14 de Julho de 2016 em UTC
-            const agora = new Date();
+  <script>
+    function calcularDiferenca() {
+      const inicio = new Date("2016-07-14T00:00:00-03:00");
+      const agora = new Date(new Date().toLocaleString("en-US", { timeZone: "America/Sao_Paulo" }));
 
-            // Diferença total em milissegundos
-            let diff = agora - inicio;
+      const diff = agora - inicio;
 
-            // Cálculos baseados em UTC para precisão
-            const startUTC = Date.UTC(inicio.getUTCFullYear(), inicio.getUTCMonth(), inicio.getUTCDate());
-            const nowUTC = Date.UTC(agora.getUTCFullYear(), agora.getUTCMonth(), agora.getUTCDate());
+      let anos = agora.getFullYear() - inicio.getFullYear();
+      let meses = agora.getMonth() - inicio.getMonth();
+      let dias = agora.getDate() - inicio.getDate();
 
-            // Cálculo preciso de anos, meses e dias
-            let anos = agora.getUTCFullYear() - inicio.getUTCFullYear();
-            let meses = agora.getUTCMonth() - inicio.getUTCMonth();
-            let dias = agora.getUTCDate() - inicio.getUTCDate();
+      if (dias < 0) {
+        const ultimoDiaMesAnterior = new Date(agora.getFullYear(), agora.getMonth(), 0).getDate();
+        dias = ultimoDiaMesAnterior - inicio.getDate() + agora.getDate();
+        meses--;
+      }
 
-            // Ajustes para valores negativos
-            if (dias < 0) {
-                const ultimoDiaMesAnterior = new Date(agora.getUTCFullYear(), agora.getUTCMonth(), 0).getUTCDate();
-                dias = ultimoDiaMesAnterior - inicio.getUTCDate() + agora.getUTCDate();
-                meses--;
-            }
+      if (meses < 0) {
+        meses += 12;
+        anos--;
+      }
 
-            if (meses < 0) {
-                meses += 12;
-                anos--;
-            }
+      const horas = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutos = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const segundos = Math.floor((diff % (1000 * 60)) / 1000);
 
-            // Cálculo de horas, minutos e segundos
-            const horas = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutos = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-            const segundos = Math.floor((diff % (1000 * 60)) / 1000);
+      const totalDias = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const totalHoras = Math.floor(diff / (1000 * 60 * 60));
+      const totalMinutos = Math.floor(diff / (1000 * 60));
+      const totalSegundos = Math.floor(diff / 1000);
 
-            return {
-                anos: anos,
-                meses: meses,
-                dias: dias,
-                horas: horas,
-                minutos: minutos,
-                segundos: segundos
-            };
-        }
+      // Cálculo correto dos anos em decimal (com duas casas decimais)
+      const aniversarioUltimoAno = new Date(agora.getFullYear(), inicio.getMonth(), inicio.getDate());
+      if (agora < aniversarioUltimoAno) {
+        aniversarioUltimoAno.setFullYear(aniversarioUltimoAno.getFullYear() - 1);
+      }
+      const diasDesdeUltimoAniversario = Math.floor((agora - aniversarioUltimoAno) / (1000 * 60 * 60 * 24));
+      const diasNoAnoAtual = (agora.getFullYear() % 4 === 0) ? 366 : 365; 
+      const anosDecimal = (anos + (diasDesdeUltimoAniversario / diasNoAnoAtual)).toFixed(2);
 
-        function atualizarContador() {
-            const tempo = calcularDiferenca();
-            const contador = document.getElementById('contador');
-            contador.innerHTML = `${tempo.anos} anos, ${tempo.meses} meses, ${tempo.dias} dias<br>
-                                ${tempo.horas} horas, ${tempo.minutos} minutos, ${tempo.segundos} segundos`;
-        }
+      return {
+        anos,
+        meses,
+        dias,
+        horas,
+        minutos,
+        segundos,
+        totalDias,
+        totalHoras,
+        totalMinutos,
+        totalSegundos,
+        anosDecimal
+      };
+    }
 
-        // Atualiza imediatamente e a cada segundo
-        atualizarContador();
-        setInterval(atualizarContador, 1000);
-    </script>
+    function atualizarContador() {
+      const tempo = calcularDiferenca();
+
+      document.getElementById('contador').innerHTML = `${tempo.anos} anos, ${tempo.meses} meses, ${tempo.dias} dias<br>
+                                                        ${tempo.horas} horas, ${tempo.minutos} minutos, ${tempo.segundos} segundos`;
+      document.getElementById('anosDecimal').innerHTML = `${tempo.anosDecimal} anos juntos`;
+      document.getElementById('diasTotais').innerHTML = `${tempo.totalDias} dias juntos`;
+      document.getElementById('horasTotais').innerHTML = `${tempo.totalHoras} horas juntos`;
+      document.getElementById('minutosTotais').innerHTML = `${tempo.totalMinutos} minutos juntos`;
+      document.getElementById('segundosTotais').innerHTML = `${tempo.totalSegundos} segundos juntos`;
+    }
+
+    atualizarContador();
+    setInterval(atualizarContador, 1000);
+  </script>
 </body>
 </html>
