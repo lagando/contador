@@ -2,55 +2,107 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Nosso Tempo Juntos ❤️</title>
+  <title>Tempo do Nosso Amor ❤️</title>
   <style>
     body {
       font-family: 'Arial', sans-serif;
       text-align: center;
       padding: 20px;
-      background-color: #ffe6e6;
-      color: #b30000;
+      background: linear-gradient(45deg, #ffb3b3, #ffe6e6);
+      color: #660000;
+      min-height: 100vh;
     }
     h1 {
-      font-size: 2.5em;
-      margin-bottom: 10px;
+      font-size: 2.8em;
+      margin: 30px 0;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+      font-family: 'Great Vibes', cursive;
     }
     .contador-box {
-      font-size: 1.8em;
-      margin-top: 20px;
-      padding: 20px;
-      background-color: #ffcccc;
-      border-radius: 15px;
+      font-size: 1.6em;
+      margin: 15px;
+      padding: 25px;
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 20px;
       display: inline-block;
-      min-width: 350px;
-      box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
+      min-width: 400px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+      border: 2px solid #ff9999;
+    }
+    .contador-box:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
     }
     .contador-container {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 15px;
+      gap: 20px;
+      margin: 40px 0;
     }
     .heart {
-      font-size: 2em;
+      font-size: 2.5em;
+      margin: 20px 0;
+      animation: pulse 1.5s infinite;
+    }
+    .separator {
+      width: 50%;
+      height: 2px;
+      background: #ff6666;
+      margin: 40px auto;
+      opacity: 0.5;
+    }
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+    #footer {
+      margin-top: 50px;
+      font-style: italic;
+      color: #990000;
+      font-size: 1.2em;
     }
   </style>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
 </head>
 <body>
-  <h1>Gabriel e Giulia <br> Nosso amor em Números desde 14/07/2016 ❤️</h1>
-  <p class="heart">💖 Desde o dia que começamos nosso namoro 💖</p>
+  <!-- Primeiro Contador -->
+  <h1>Gabriel e Giulia<br><span style="font-size:0.8em">Desde 14/07/2016 ❤️</span></h1>
+  <p class="heart">💝 Nosso Amor 💝</p>
   <div class="contador-container">
     <div id="contador" class="contador-box">Carregando...</div>
-    ou seja, nós temos:
+    <div class="contador-box" style="background:#fff0f0; font-size:1.4em">
+      Ou seja, nós temos:
+    </div>
     <div id="anosDecimal" class="contador-box">Carregando anos...</div>
     <div id="diasTotais" class="contador-box">Carregando dias totais...</div>
     <div id="horasTotais" class="contador-box">Carregando horas totais...</div>
     <div id="minutosTotais" class="contador-box">Carregando minutos totais...</div>
     <div id="segundosTotais" class="contador-box">Carregando segundos totais...</div>
-    Feito por: Gabriel
   </div>
 
+  <div class="separator"></div>
+
+  <!-- Segundo Contador -->
+  <h1>Nosso Primeiro Beijo<br><span style="font-size:0.8em">Desde 07/05/2016 ❤️</span></h1>
+  <p class="heart">💋 Nosso Início 💋</p>
+  <div class="contador-container">
+    <div id="contador2" class="contador-box">Carregando...</div>
+    <div class="contador-box" style="background:#fff0f0; font-size:1.4em">
+      Ou seja, nós temos:
+    </div>
+    <div id="anosDecimal2" class="contador-box">Carregando anos...</div>
+    <div id="diasTotais2" class="contador-box">Carregando dias totais...</div>
+    <div id="horasTotais2" class="contador-box">Carregando horas totais...</div>
+    <div id="minutosTotais2" class="contador-box">Carregando minutos totais...</div>
+    <div id="segundosTotais2" class="contador-box">Carregando segundos totais...</div>
+  </div>
+
+  <div id="footer">Feito com ❤️ por Gabriel</div>
   <script>
+    // Funções para o primeiro contador (original)
     function calcularDiferenca() {
       const inicio = new Date("2016-07-14T00:00:00-03:00");
       const agora = new Date(new Date().toLocaleString("en-US", { timeZone: "America/Sao_Paulo" }));
@@ -81,7 +133,6 @@
       const totalMinutos = Math.floor(diff / (1000 * 60));
       const totalSegundos = Math.floor(diff / 1000);
 
-      // Cálculo correto dos anos em decimal (com duas casas decimais)
       const aniversarioUltimoAno = new Date(agora.getFullYear(), inicio.getMonth(), inicio.getDate());
       if (agora < aniversarioUltimoAno) {
         aniversarioUltimoAno.setFullYear(aniversarioUltimoAno.getFullYear() - 1);
@@ -90,26 +141,12 @@
       const diasNoAnoAtual = (agora.getFullYear() % 4 === 0) ? 366 : 365; 
       const anosDecimal = (anos + (diasDesdeUltimoAniversario / diasNoAnoAtual)).toFixed(2);
 
-      return {
-        anos,
-        meses,
-        dias,
-        horas,
-        minutos,
-        segundos,
-        totalDias,
-        totalHoras,
-        totalMinutos,
-        totalSegundos,
-        anosDecimal
-      };
+      return { anos, meses, dias, horas, minutos, segundos, totalDias, totalHoras, totalMinutos, totalSegundos, anosDecimal };
     }
 
     function atualizarContador() {
       const tempo = calcularDiferenca();
-
-      document.getElementById('contador').innerHTML = `${tempo.anos} anos, ${tempo.meses} meses, ${tempo.dias} dias<br>
-                                                        ${tempo.horas} horas, ${tempo.minutos} minutos, ${tempo.segundos} segundos`;
+      document.getElementById('contador').innerHTML = `${tempo.anos} anos, ${tempo.meses} meses, ${tempo.dias} dias<br>${tempo.horas} horas, ${tempo.minutos} minutos, ${tempo.segundos} segundos`;
       document.getElementById('anosDecimal').innerHTML = `${tempo.anosDecimal} anos juntos`;
       document.getElementById('diasTotais').innerHTML = `${tempo.totalDias} dias juntos`;
       document.getElementById('horasTotais').innerHTML = `${tempo.totalHoras} horas juntos`;
@@ -117,8 +154,65 @@
       document.getElementById('segundosTotais').innerHTML = `${tempo.totalSegundos} segundos juntos`;
     }
 
+    // Funções para o segundo contador (novo)
+    function calcularDiferenca2() {
+      const inicio = new Date("2016-05-07T00:00:00-03:00");
+      const agora = new Date(new Date().toLocaleString("en-US", { timeZone: "America/Sao_Paulo" }));
+
+      const diff = agora - inicio;
+
+      let anos = agora.getFullYear() - inicio.getFullYear();
+      let meses = agora.getMonth() - inicio.getMonth();
+      let dias = agora.getDate() - inicio.getDate();
+
+      if (dias < 0) {
+        const ultimoDiaMesAnterior = new Date(agora.getFullYear(), agora.getMonth(), 0).getDate();
+        dias = ultimoDiaMesAnterior - inicio.getDate() + agora.getDate();
+        meses--;
+      }
+
+      if (meses < 0) {
+        meses += 12;
+        anos--;
+      }
+
+      const horas = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutos = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const segundos = Math.floor((diff % (1000 * 60)) / 1000);
+
+      const totalDias = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const totalHoras = Math.floor(diff / (1000 * 60 * 60));
+      const totalMinutos = Math.floor(diff / (1000 * 60));
+      const totalSegundos = Math.floor(diff / 1000);
+
+      const aniversarioUltimoAno = new Date(agora.getFullYear(), inicio.getMonth(), inicio.getDate());
+      if (agora < aniversarioUltimoAno) {
+        aniversarioUltimoAno.setFullYear(aniversarioUltimoAno.getFullYear() - 1);
+      }
+      const diasDesdeUltimoAniversario = Math.floor((agora - aniversarioUltimoAno) / (1000 * 60 * 60 * 24));
+      const diasNoAnoAtual = (agora.getFullYear() % 4 === 0) ? 366 : 365;
+      const anosDecimal = (anos + (diasDesdeUltimoAniversario / diasNoAnoAtual)).toFixed(2);
+
+      return { anos, meses, dias, horas, minutos, segundos, totalDias, totalHoras, totalMinutos, totalSegundos, anosDecimal };
+    }
+
+    function atualizarContador2() {
+      const tempo = calcularDiferenca2();
+      document.getElementById('contador2').innerHTML = `${tempo.anos} anos, ${tempo.meses} meses, ${tempo.dias} dias<br>${tempo.horas} horas, ${tempo.minutos} minutos, ${tempo.segundos} segundos`;
+      document.getElementById('anosDecimal2').innerHTML = `${tempo.anosDecimal} anos juntos`;
+      document.getElementById('diasTotais2').innerHTML = `${tempo.totalDias} dias juntos`;
+      document.getElementById('horasTotais2').innerHTML = `${tempo.totalHoras} horas juntos`;
+      document.getElementById('minutosTotais2').innerHTML = `${tempo.totalMinutos} minutos juntos`;
+      document.getElementById('segundosTotais2').innerHTML = `${tempo.totalSegundos} segundos juntos`;
+    }
+
+    // Inicialização dos contadores
     atualizarContador();
     setInterval(atualizarContador, 1000);
+    
+    atualizarContador2();
+    setInterval(atualizarContador2, 1000);
   </script>
+
 </body>
 </html>
